@@ -477,7 +477,7 @@ class InstallController extends Controller
         Artisan::call('key:generate', ['--force' => true]);
 
         $url = url('migrate');
-        $result = ['success' => 'Pre migration has been tested successfully', 'next' => 'Migrating tables in database', 'api' => $url];
+        $result = ['success' => 'Pre migration test has run successfully', 'next' => 'Migrating tables in database', 'api' => $url];
 
         return response()->json(compact('result'));
     }
@@ -553,16 +553,15 @@ class InstallController extends Controller
 
     public function updateInstalEnv()
     {
-        Artisan::call('jwt:secret');
-
         $env = base_path().DIRECTORY_SEPARATOR.'.env';
         if (is_file($env)) {
             $txt = 'DB_INSTALL=1';
             $txt1 = 'APP_ENV=development';
-            file_put_contents($env, PHP_EOL.$txt.PHP_EOL, FILE_APPEND | LOCK_EX);
-            file_put_contents($env, $txt1.PHP_EOL, FILE_APPEND | LOCK_EX);
+            file_put_contents($env, $txt.PHP_EOL, FILE_APPEND | LOCK_EX);
+            file_put_contents($env, $txt1, FILE_APPEND | LOCK_EX);
         } else {
             throw new Exception('.env not found');
         }
+        Artisan::call('jwt:secret');
     }
 }

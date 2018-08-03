@@ -351,6 +351,9 @@ class ApiController extends Controller
                     ->leftjoin('department', function ($join) {
                         $join->on('department.id', '=', 'tickets.dept_id');
                     })
+                    ->leftJoin('ticket_priority', 'ticket_priority.priority_id', '=', 'tickets.priority_id')
+                    ->join('sla_plan', 'sla_plan.id', '=', 'tickets.sla')
+                    ->join('help_topic', 'help_topic.id', '=', 'tickets.help_topic_id')
                     ->join('ticket_status', 'ticket_status.id', '=', 'tickets.status')
                     ->join('ticket_thread', function ($join) {
                         $join->on('tickets.id', '=', 'ticket_thread.ticket_id')
@@ -407,6 +410,9 @@ class ApiController extends Controller
                     ->leftjoin('department', function ($join) {
                         $join->on('department.id', '=', 'tickets.dept_id');
                     })
+                    ->leftJoin('ticket_priority', 'ticket_priority.priority_id', '=', 'tickets.priority_id')
+                    ->join('sla_plan', 'sla_plan.id', '=', 'tickets.sla')
+                    ->join('help_topic', 'help_topic.id', '=', 'tickets.help_topic_id')
                     ->join('ticket_status', 'ticket_status.id', '=', 'tickets.status')
                     ->join('ticket_thread', function ($join) {
                         $join->on('tickets.id', '=', 'ticket_thread.ticket_id')
@@ -440,7 +446,7 @@ class ApiController extends Controller
             $line = $e->getLine();
             $file = $e->getFile();
 
-            return response()->json(compact('error', 'file', 'line'));
+            return response()->json(compact('error', 'file', 'line'), 500);
         } catch (\TokenExpiredException $e) {
             $error = $e->getMessage();
 
