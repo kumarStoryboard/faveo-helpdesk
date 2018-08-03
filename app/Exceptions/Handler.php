@@ -216,9 +216,9 @@ class Handler extends ExceptionHandler
                 return redirect('/')->with('fails', \Lang::get('lang.access-denied'));
             case $e instanceof MethodNotAllowedHttpException:
                 if (stripos($request->url(), 'api')) {
-                    $result = ['error' => \Lang::get('lang.methon_not_allowed')];
+                    $result = ['message' => \Lang::get('lang.methon_not_allowed'), 'success' => false];
 
-                    return response()->json(compact('result'), 405);
+                    return response()->json($result, 405);
                 }
                 $this->render500($request, $e);
             default:

@@ -1712,4 +1712,5 @@ return [
      'learn_more'                                                                                            => 'Learn More',
      'video_walk_through'                                                                                    => 'Video walk through',
      'email_support'                                                                                         => 'Email Support',
+     'methon_not_allowed'                                                                                    => 'Method not allowed',
 ];
